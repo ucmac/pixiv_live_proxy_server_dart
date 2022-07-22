@@ -1,6 +1,6 @@
 name: pixiv_live_proxy_server
 description: 免代理Pixiv Live
-version: 0.0.1
+version: 0.0.2
 homepage: https://pixiv.xiaocao.moe/#/pixiv-live-proxy-server/dart
 repository: https://github.com/git-xiaocao/pixiv_live_proxy_server
 

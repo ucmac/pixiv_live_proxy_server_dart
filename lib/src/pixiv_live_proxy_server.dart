@@ -21,10 +21,7 @@ class PixivLiveProxyServer {
 
   late final String originalHost;
 
-  Future<void> init() async {
-    server = await HttpServer.bind('127.0.0.1', port);
-    originalHost = Uri.parse(url).host;
-  }
+  StreamSubscription<HttpRequest>? _subscription;
 
   final Dio _httpClient = Dio(BaseOptions(
     validateStatus: (status) => true,
@@ -38,8 +35,10 @@ class PixivLiveProxyServer {
     return m3u8.replaceAll('https://$originalHost', 'http://127.0.0.1:$port');
   }
 
-  void listen() {
-    server.listen((HttpRequest request) async {
+  Future<void> listen() async {
+    server = await HttpServer.bind('127.0.0.1', port);
+    originalHost = Uri.parse(url).host;
+    _subscription = server.listen((HttpRequest request) async {
       final uri = request.requestedUri;
       final response = request.response;
 
@@ -82,5 +81,10 @@ class PixivLiveProxyServer {
 
       response.close();
     });
+  }
+
+  void close() {
+    _subscription?.cancel();
+    server.close();
   }
 }

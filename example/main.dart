@@ -9,9 +9,8 @@ void main() async {
     port: 44444,
     serverIp: '210.140.92.212'
   );
-  await server.init();
-  //应该新开一个isolate
-  final subscription = server.listen();
+
+  await server.listen();
   //访问 http://127.0.0.1:44444/2022072220/1658489550840747562eda32645fb1d07d9ab48713951da1104/index.m3u8
 }
 
